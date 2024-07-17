@@ -7,7 +7,7 @@ const App = () => {
   useEffect(() => {
     const getImages = async () => {
       try {
-        const response = await fetchImages();
+        const response = await fetchImages('ocean', 50);
         setImages(response);
       } catch (error) {
         console.log(error);
