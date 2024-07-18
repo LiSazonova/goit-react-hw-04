@@ -1,6 +1,5 @@
-// src/App.jsx
 import { useState, useEffect } from 'react';
-import fetchImages from './api/unsplash-api';
+import fetchImages from './api/unsplash-api'; // Импорт функции из api.js
 import SearchBar from './components/SearchBar/SearchBar';
 import ImageGallery from './components/ImageGallery/ImageGallery';
 import Loader from './components/Loader/Loader';
@@ -17,14 +16,19 @@ const App = () => {
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [noImages, setNoImages] = useState(false);
 
   useEffect(() => {
     if (!query) return;
 
     const getImages = async () => {
       setLoading(true);
+      setNoImages(false);
       try {
         const newImages = await fetchImages(query, page);
+        if (newImages.length === 0 && page === 1) {
+          setNoImages(true);
+        }
         setImages(prevImages => [...prevImages, ...newImages]);
       } catch (error) {
         setError(error.message);
@@ -41,6 +45,7 @@ const App = () => {
     setImages([]);
     setPage(1);
     setError(null);
+    setNoImages(false);
   };
 
   const handleLoadMore = () => setPage(prevPage => prevPage + 1);
@@ -53,9 +58,11 @@ const App = () => {
   const handleCloseModal = () => setShowModal(false);
 
   return (
-    <div>
+    <div className="App">
       <SearchBar onSubmit={handleSearch} />
       {error && <ErrorMessage message={error} />}
+      {noImages && !loading && <p>No images found</p>}{' '}
+      {/* Сообщение об отсутствии изображений */}
       <ImageGallery images={images} onImageClick={handleImageClick} />
       {loading && <Loader />}
       {images.length > 0 && !loading && (
