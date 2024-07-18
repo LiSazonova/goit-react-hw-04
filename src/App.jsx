@@ -31,7 +31,7 @@ const App = () => {
   return (
     <div className="App">
       <SearchBar onSubmit={handleSearch} />
-      <ImageGallery images={images} />
+      {query && <ImageGallery images={images} />}
       <Toaster />
     </div>
   );

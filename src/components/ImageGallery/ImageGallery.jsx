@@ -1,3 +1,5 @@
+import ImageCard from '../ImageCard/ImageCard';
+
 const ImageGallery = ({ images }) => {
   return (
     <div>
@@ -5,7 +7,7 @@ const ImageGallery = ({ images }) => {
         {images.map(image => (
           <li key={image.id}>
             <h3>{image.alt_description}</h3>
-            <img src={image.urls.small} alt={image.alt_description} />
+            <ImageCard image={image} />
           </li>
         ))}
       </ul>
