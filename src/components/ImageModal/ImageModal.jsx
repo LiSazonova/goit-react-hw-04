@@ -1,7 +1,14 @@
 import Modal from 'react-modal';
+import s from './ImageModal.module.css';
 
 const customStyles = {
+  overlay: {
+    backgroundColor: 'rgb(40, 40, 40, 0.7)',
+  },
   content: {
+    backgroundColor: '#333333',
+    boxShadow: '4px 4px 8px rgb(97, 214, 251, 0.4)',
+    border: '1px solid #61D6FB',
     top: '50%',
     left: '50%',
     right: 'auto',
@@ -19,13 +26,20 @@ const ImageModal = ({ isOpen, onRequestClose, image }) => {
       style={customStyles}
       contentLabel="Image Modal"
     >
-      <h2>Image Detail</h2>
+      <h2 className={s.modal_title}>{image.alt_description}</h2>
       {image && (
         <div>
-          <img src={image.urls.regular} alt={image.alt_description} />
+          <img
+            className={s.modal_image}
+            src={image.urls.regular}
+            alt={image.alt_description}
+          />
         </div>
       )}
-      <button onClick={onRequestClose}>Close</button>
+      <div className={s.modal_description}>
+        <p className={s.modal_text}>Likes: {image.likes}</p>
+        <p className={s.modal_text}>Author: {image.user.name}</p>
+      </div>
     </Modal>
   );
 };
