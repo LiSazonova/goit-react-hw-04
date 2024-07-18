@@ -1,0 +1,19 @@
+.wrapper{
+    padding: 40px;
+}
+.gallery {
+    display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        box-sizing: border-box;
+}
+
+.gallery__item {
+    box-shadow: 4px 4px 8px rgb(255 255 255 / 40%);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.gallery__item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}

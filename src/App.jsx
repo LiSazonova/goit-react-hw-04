@@ -7,6 +7,8 @@ import ErrorMessage from './components/ErrorMessage/ErrorMessage';
 import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn';
 import ImageModal from './components/ImageModal/ImageModal';
 import { Toaster } from 'react-hot-toast';
+import Footer from './components/Footer/Footer';
+import s from './App.module.css';
 
 const App = () => {
   const [images, setImages] = useState([]);
@@ -24,17 +26,19 @@ const App = () => {
     const getImages = async () => {
       setLoading(true);
       setNoImages(false);
-      try {
-        const newImages = await fetchImages(query, page);
-        if (newImages.length === 0 && page === 1) {
-          setNoImages(true);
+      setTimeout(async () => {
+        try {
+          const newImages = await fetchImages(query, page);
+          if (newImages.length === 0 && page === 1) {
+            setNoImages(true);
+          }
+          setImages(prevImages => [...prevImages, ...newImages]);
+        } catch (error) {
+          setError(error.message);
+        } finally {
+          setLoading(false);
         }
-        setImages(prevImages => [...prevImages, ...newImages]);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
+      }, 1000);
     };
 
     getImages();
@@ -61,8 +65,7 @@ const App = () => {
     <div className="App">
       <SearchBar onSubmit={handleSearch} />
       {error && <ErrorMessage message={error} />}
-      {noImages && !loading && <p>No images found</p>}{' '}
-      {/* Сообщение об отсутствии изображений */}
+      {noImages && !loading && <p className={s.error}>No images found</p>}
       <ImageGallery images={images} onImageClick={handleImageClick} />
       {loading && <Loader />}
       {images.length > 0 && !loading && (
@@ -75,6 +78,7 @@ const App = () => {
           image={selectedImage}
         />
       )}
+      {images.length > 0 && <Footer />}
       <Toaster />
     </div>
   );
