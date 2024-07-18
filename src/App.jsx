@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import fetchImages from './api/unsplash-api'; // Импорт функции из api.js
+import fetchImages from './api/unsplash-api';
 import SearchBar from './components/SearchBar/SearchBar';
 import ImageGallery from './components/ImageGallery/ImageGallery';
 import Loader from './components/Loader/Loader';
