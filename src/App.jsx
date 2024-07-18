@@ -1,23 +1,38 @@
-import { useEffect, useState } from 'react';
-import ImageGallery from './components/ImageGallery/ImageGallery';
+import { useState, useEffect } from 'react';
 import fetchImages from './api/unsplash-api';
+import SearchBar from './components/SearchBar/SearchBar';
+import ImageGallery from './components/ImageGallery/ImageGallery';
+import { Toaster } from 'react-hot-toast';
 
 const App = () => {
   const [images, setImages] = useState([]);
+  const [query, setQuery] = useState('');
+
   useEffect(() => {
+    if (!query) return;
+
     const getImages = async () => {
       try {
-        const response = await fetchImages('ocean', 50);
-        setImages(response);
+        const newImages = await fetchImages(query);
+        setImages(prevImages => [...prevImages, ...newImages]);
       } catch (error) {
         console.log(error);
       }
     };
+
     getImages();
-  }, []);
+  }, [query]);
+
+  const handleSearch = searchQuery => {
+    setQuery(searchQuery);
+    setImages([]);
+  };
+
   return (
-    <div>
+    <div className="App">
+      <SearchBar onSubmit={handleSearch} />
       <ImageGallery images={images} />
+      <Toaster />
     </div>
   );
 };
