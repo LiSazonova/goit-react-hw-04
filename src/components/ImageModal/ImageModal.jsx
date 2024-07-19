@@ -18,7 +18,11 @@ const customStyles = {
   },
 };
 
+Modal.setAppElement('#root');
+
 const ImageModal = ({ isOpen, onRequestClose, image }) => {
+  if (!image) return null;
+
   return (
     <Modal
       isOpen={isOpen}
@@ -27,15 +31,13 @@ const ImageModal = ({ isOpen, onRequestClose, image }) => {
       contentLabel="Image Modal"
     >
       <h2 className={s.modal_title}>{image.alt_description}</h2>
-      {image && (
-        <div>
-          <img
-            className={s.modal_image}
-            src={image.urls.regular}
-            alt={image.alt_description}
-          />
-        </div>
-      )}
+      <div>
+        <img
+          className={s.modal_image}
+          src={image.urls.regular}
+          alt={image.alt_description}
+        />
+      </div>
       <div className={s.modal_description}>
         <p className={s.modal_text}>Likes: {image.likes}</p>
         <p className={s.modal_text}>Author: {image.user.name}</p>

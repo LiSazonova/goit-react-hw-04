@@ -3,12 +3,13 @@
 }
 .gallery {
     display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 16px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
         box-sizing: border-box;
 }
 
 .gallery__item {
+    border-radius: 8px;
     box-shadow: 4px 4px 8px rgb(255 255 255 / 40%);
     transition: transform 0.3s, box-shadow 0.3s;
 }

@@ -6,13 +6,8 @@ const ImageGallery = ({ images, onImageClick }) => {
     <div className={s.wrapper}>
       <ul className={s.gallery}>
         {images.map(image => (
-          <li
-            className={s.gallery__item}
-            key={image.id}
-            onClick={() => onImageClick(image)}
-          >
-            {/* <h3>{image.alt_description}</h3> */}
-            <ImageCard image={image} />
+          <li className={s.gallery__item} key={image.id}>
+            <ImageCard image={image} onClick={() => onImageClick(image)} />
           </li>
         ))}
       </ul>
